@@ -16,6 +16,7 @@ using WebApplication1.Configurations;
 using WebApplication1.Data;
 using WebApplication1.IRepository;
 using WebApplication1.Repository;
+using WebApplication1.Services;
 
 namespace WebApplication1
 {
@@ -36,6 +37,10 @@ namespace WebApplication1
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
             );
 
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+
             services.AddCors(o => {
                 o.AddPolicy("AllowAll", builder =>
                     builder.AllowAnyOrigin()
@@ -46,6 +51,7 @@ namespace WebApplication1
             services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddSwaggerGen(c =>
             {
@@ -68,11 +74,11 @@ namespace WebApplication1
 
             app.UseHttpsRedirection();
 
-            app.UseCors("AllowAll6210" +
-                "");
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220325044947_addedDefaultRoles")]
+    partial class addedDefaultRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace WebApplication1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d64c92d8-cbc6-4b91-bdcc-cf9352625d99",
-                            ConcurrencyStamp = "68f6864b-fe87-4b80-9260-e979f3551b1c",
-                            Name = "User",
+                            Id = "0b46ce3a-b52d-4927-91a6-b5ae5f25ac68",
+                            ConcurrencyStamp = "714770dd-0eac-4dc6-80e9-f0097d29e1f4",
+                            Name = "Role",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "16ec23bf-1311-4a45-a158-bff54d7eaa46",
-                            ConcurrencyStamp = "7fcdc6b6-98da-45a3-a0a9-fd94c2a327a0",
+                            Id = "8846fd17-d557-46f8-835c-0afa9df2a6fd",
+                            ConcurrencyStamp = "f18257e4-68ec-4525-8afc-ab8f2de5eedc",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -253,26 +255,6 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Jamaica",
-                            ShortName = "JM"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bahamas",
-                            ShortName = "BS"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Cayman Island",
-                            ShortName = "CI"
-                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Data.Hotel", b =>
@@ -299,32 +281,6 @@ namespace WebApplication1.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Hotels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Negril",
-                            CountryId = 1,
-                            Name = "Sandals Resort and Spa",
-                            Rating = 4.5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "George Town",
-                            CountryId = 3,
-                            Name = "Comfort Suits",
-                            Rating = 4.2999999999999998
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "Nassua",
-                            CountryId = 2,
-                            Name = "Grand Palladium",
-                            Rating = 4.0
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
