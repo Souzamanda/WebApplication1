@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -45,7 +46,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetHotel")]
+        [Authorize]
+        [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetHotel(int id)
@@ -62,32 +64,33 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "Internal Server Error. Please try again later.");
             }
         }
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDTO hotelDTO)
-        {
-            if(!ModelState.IsValid)
-            {
-                _logger.LogError($"Invalid POST attempt in {nameof(CreateHotel)}");
-                return BadRequest(ModelState);
-            }
 
-            try
-            {
-                var hotel = _mapper.Map<Hotel>(hotelDTO);
-                await _unitOfWork.Hotels.Insert(hotel);
-                await _unitOfWork.Save();
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDTO hotelDTO)
+        //{
+        //    if(!ModelState.IsValid)
+        //    {
+        //        _logger.LogError($"Invalid POST attempt in {nameof(CreateHotel)}");
+        //        return BadRequest(ModelState);
+        //    }
 
-                return CreatedAtRoute("GetHotel", new { id = hotel.Id }, hotel);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(CreateHotel)}");
-                return StatusCode(500, "Internal Server Error. Please try again later.");
-            }
-        }
+        //    try
+        //    {
+        //        var hotel = _mapper.Map<Hotel>(hotelDTO);
+        //        await _unitOfWork.Hotels.Insert(hotel);
+        //        await _unitOfWork.Save();
+
+        //        return CreatedAtRoute("GetHotel", new { id = hotel.Id }, hotel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, $"Something went wrong in the {nameof(CreateHotel)}");
+        //        return StatusCode(500, "Internal Server Error. Please try again later.");
+        //    }
+        //}
 
     }
 }
